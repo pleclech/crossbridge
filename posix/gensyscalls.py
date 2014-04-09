@@ -251,9 +251,12 @@ def read_syscalls(filename):
     with open(filename) as master_file:
         logical_line = ''
         for line in master_file:
-            if line[0] == ';' or line[0] == '#' or len(line.strip()) == 0:
+            tmp = line.strip()
+            if len(tmp) == 0: continue
+            fc = tmp[0]
+            if fc == ';' or fc == '#':
                 continue
-            elif line[-2] == '\\':
+            elif tmp[-1] == '\\':
                 logical_line += line
             else:
                 call = SysCall()
